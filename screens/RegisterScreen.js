@@ -4,7 +4,8 @@ import * as firebase from "firebase";
 
 export default class RegisterScreen extends React.Component{
     static navigationOptions={
-        header: null
+        
+        headerShown: false
     };
 
 
