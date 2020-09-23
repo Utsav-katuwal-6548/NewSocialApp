@@ -96,7 +96,8 @@ const AppContainer = createStackNavigator(
           activeTintColor:"#161F3D",
           inactiveTintColor:"#B8BBC4",
           showLabel:false
-        }
+        },
+        initialRouteName:"Profile"
       }
       
    ),
@@ -110,15 +111,19 @@ const AppContainer = createStackNavigator(
     headerMode:"none",
     
   }
-)
+);
 
 
 
 const AuthStack =createStackNavigator({
-  Register:RegisterScreen,
-  Login:LoginScreen
   
-})
+  Login:LoginScreen,
+  Register:RegisterScreen
+},
+{
+  initialRouteName:"Register"
+}
+);
 
 export default createAppContainer(
   createSwitchNavigator(
