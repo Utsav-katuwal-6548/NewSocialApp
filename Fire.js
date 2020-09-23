@@ -15,9 +15,14 @@ var firebaseConfig = {
 
   class Fire {
       constructor(){
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-          }
+          this.init()
+          
+        
+        }
+        init =()=>{
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+              }
         }
 
           addPost =async({text, localUri})=>{
@@ -61,8 +66,8 @@ var firebaseConfig = {
 
         
 
-          send = message=> {
-              message.forEach(item=>{
+          send = messages=> {
+              messages.forEach(item=>{
                   const message ={
                       text :item.text,
                       timestamp: firebase.database.ServerValue.TIMESTAMP,
@@ -134,7 +139,7 @@ var firebaseConfig = {
       }
      
       get db(){
-          return firebase.firestore().ref("message");
+          return firebase.database().ref("messages");
       }
       get timestamp(){
           return Date.now();

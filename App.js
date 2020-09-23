@@ -15,6 +15,7 @@ import NotificationScreen from "./screens/NotificationScreen";
 
 import * as firebase from 'firebase'
 import { color } from 'react-native-reanimated'
+import ChatScreen from './screens/ChatScreen'
 
 var firebaseConfig = {
   apiKey: "AIzaSyBnvKh30KPuGrrPFzd33PTYikzrfZYZVYw",
@@ -118,7 +119,9 @@ const AppContainer = createStackNavigator(
 const AuthStack =createStackNavigator({
   
   Login:LoginScreen,
-  Register:RegisterScreen
+  Register:RegisterScreen,
+  Chat: ChatScreen
+  
 },
 {
   initialRouteName:"Register"
