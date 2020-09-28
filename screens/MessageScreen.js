@@ -1,5 +1,6 @@
 import React from "react";
 import{View,Text,StyleSheet, Button, Image, StatusBar,TouchableOpacity} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import  Fire from "../Fire";
 
@@ -18,6 +19,7 @@ export default class MessageScreen extends React.Component{
         this.props.navigation.navigate("Chat",{name:this.state.name});
 
     };
+     unsubscribe= null;
 
 
 
@@ -33,11 +35,17 @@ export default class MessageScreen extends React.Component{
         });
 
     }
+    componentWillUnmount(){
+
+        this.unsubscribe();
+    }
+
     
 
 render(){
 return(
-    <View style={styles.container}>
+    
+    <SafeAreaView style={styles.container}>
         <View style={{marginTop:64,alignItems:"center"}}>
             <Text style={styles.headerTitle}>ChatList</Text>
 
@@ -55,7 +63,7 @@ return(
        
         
 
-    </View>
+    </SafeAreaView>
 );
 
 }

@@ -25,6 +25,23 @@ var firebaseConfig = {
               }
         }
 
+
+        send = messages=> {
+            messages.forEach(item=>{
+                const message ={
+                    text :item.text,
+                    timestamp: firebase.firestore.ServerValue.TIMESTAMP,
+                    user: item.user
+                };
+
+                this.db.push(message)
+
+
+
+            });
+
+        };
+
           addPost =async({text, localUri})=>{
               const remoteUri =await this.uploadPhotoAsync(localUri, `photos/${this.uid}/${Date.now()}`);
 
@@ -66,21 +83,7 @@ var firebaseConfig = {
 
         
 
-          send = messages=> {
-              messages.forEach(item=>{
-                  const message ={
-                      text :item.text,
-                      timestamp: firebase.database.ServerValue.TIMESTAMP,
-                      user: item.user
-                  };
-
-                  this.db.push(message)
-
-
-
-              });
-
-          };
+         
         
 
       creatUser= async user =>{
@@ -122,13 +125,15 @@ var firebaseConfig = {
           this.db.on("child-added", snapshot=>callback(this.parse(snapshot)));
 
       };
-      off(){
-          this.db.off();
-      }
+     
 
       signOut =()=>{
           firebase.auth().signOut();
       }
+
+      off(){
+        this.db.off();
+    }
 
 
       get firestore(){
@@ -139,7 +144,7 @@ var firebaseConfig = {
       }
      
       get db(){
-          return firebase.database().ref("messages");
+          return firebase.firestore().ref("messages");
       }
       get timestamp(){
           return Date.now();

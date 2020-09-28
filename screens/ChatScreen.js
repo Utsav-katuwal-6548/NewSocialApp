@@ -1,6 +1,6 @@
 import React from "react";
 import {Platform,KeyboardAvoidingView,SafeAreaView, View, Text} from "react-native";
-import {GiftedChat} from "react-native-gifted-chat";
+import {GiftedChat, Message} from "react-native-gifted-chat";
 import Fire from "../Fire";
 
 export default class ChatScreen extends React.Component{
@@ -19,24 +19,26 @@ export default class ChatScreen extends React.Component{
     }
 
     componentDidMount(){
-        Fire.get(message =>
-            this.setState(previous =>({
+        Fire.get(message => 
+            this.setState(previous => ({
                 messages: GiftedChat.append(previous.messages, message)
-
-
             }))
             );
+        
     }
      componentWillUnmount(){
-         Fire.off();
+         Fire.off()
+         
+         
          
      }
 
     render(){
+
          const chat =<GiftedChat messages={this.state.messages} onSend={Fire.send} user={this.user}/>;
 
 
-        if(Platform.OS ==='android'){
+        if(Platform.OS ==='ios'){
             return(
                 <KeyboardAvoidingView style ={{flex :1}} behavior="padding" keyboardVerticalOffset={30} enabled>
 
