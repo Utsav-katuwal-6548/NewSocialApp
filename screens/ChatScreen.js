@@ -5,46 +5,41 @@ import Fire from "../constants/Fire";
 
 export default class ChatScreen extends React.Component {
     state = {
-        messages: []
+        messages: [],
     };
 
     get user() {
         return {
-            _id: Fire.uid,
+            _id: Fire.shared.uid,
             name: this.props.navigation.state.params.name
         };
     }
 
     componentDidMount() {
-        //Fire.get(message =>
-            //this.setState(previous => (
-                //{
-                    //messages: GiftedChat.append(previous.messages, message)
-                //})));
+        //Fire.shared.get(message=>
+            //this.setState(previousState=>({
+                //messages:GiftedChat.append(previousState.messages,message)
+            //})
+            //)
+            //);
     }
 
     componentWillUnmount() {
-        //Fire.off()
+        Fire.shared.off();
 
 
     }
 
     render() {
+        return(
+            <GiftedChat
+            messages={this.state.messages}
+            onSend={Fire.shared.send}
+            user={this.user}
+            />
+        );
 
-        const chat = <GiftedChat messages={this.state.messages} onSend={Fire.send} user={this.user}/>;
-
-
-        if (Platform.OS === 'ios') {
-            return (
-                <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={30} enabled>
-
-                    {chat}
-                </KeyboardAvoidingView>
-            );
-        }
-
-        return <SafeAreaView style={{ flex: 1 }}>{chat}</SafeAreaView>
-
+        
 
     }
 

@@ -29,18 +29,13 @@ var firebaseConfig = {
 
 
         send = messages=> {
-            messages.forEach(item=>{
-                const message ={
-                    text :item.text,
-                    timestamp: firebase.firestore.ServerValue.TIMESTAMP,
-                    user: item.user
-                };
+            for(let i=0; i< messages.length; i++){
 
-                this.db.push(message)
-
-
-
-            });
+                const{text, user}= messages[i];
+                const message={text,user,createdAt:this.timestamp};
+                this.db.push(message);
+            }
+           
 
         };
 
@@ -113,21 +108,32 @@ var firebaseConfig = {
       };
 
 
-      parse = message=>{
-          const {user,text,timestamp} = message.val()
-          const{key: _id}= message
-          const createdAt = new Date(timestamp);
+      parse = snapshot=>{
+          const {user,text,timestamp:numberStamp} = snapshot.val();
+          const{key: _id}= snapshot;
+          const{key :id}=snapshot;
+          const timestamp= new Date(numberStamp);
 
-          return{
-              _id, createdAt, text, user
+          const message={
 
+            id,
+            _id,
+            timestamp,
+            text,
+            user,
           };
-      };
+          return message;
+        
+          
 
-      get = callback =>{
-          this.db.on("child-added", snapshot=>callback(this.parse(snapshot)));
-
+         
       };
+      
+
+     get =callback=>{
+         this.db.limitToLast()
+         .on('child-added', snapshot=>callback(this.parse(snapshot)));
+     }
      
 
       signOut =()=>{
@@ -145,14 +151,13 @@ var firebaseConfig = {
       get uid(){
           return(firebase.auth().currentUser|| {}).uid;
       }
-      get uname(){
-          return firebase.database().ref("users");
-      }
+     
       
      
       get db(){
-          return firebase.database().ref("messages");
+          return firebase.database().ref("Messages");
       }
+      
       get timestamp(){
           return Date.now();
       }
