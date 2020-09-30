@@ -1,91 +1,47 @@
-
 import React from "react";
-import{View, Text, StyleSheet, FlatList,Image} from "react-native";
-import{ Ionicons} from "@expo/vector-icons";
+import { FlatList, Image, StyleSheet, Text, View, StatusBar } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import moment from 'moment'
+import posts from "../data/postdata";
 
-
-
-
-posts=[
-    
-    {
-        id:"1",
-        name:"utsav katuwal",
-        text:"i am first to post",
-        timestamp:1569109273726,
-        avatar:require("../assets/new.png"),
-        image:require("../assets/secondImage.png")
-    },
-    {
-        id:"2",
-        name:"utsav katuwal",
-        text:"i am second to post",
-        timestamp:1569109273726,
-        avatar:require("../assets/firstimage.jpg"),
-        image:require("../assets/firstimage.jpg")
-    },
-    {
-        id:"3",
-        name:"utsav katuwal",
-        text:"i am third to post",
-        timestamp:1569109273726,
-        avatar:require("../assets/header1.png"),
-        image:require("../assets/new.png")
-    }
-
-];
-
-export default class HomeScreen extends React.Component{
-    renderPost= post =>{
-        return(
+export default class HomeScreen extends React.Component {
+    renderPost = post => {
+        return (
             <View style={styles.feedItem}>
+                <StatusBar hidden />
                 <Image source={post.avatar} style={styles.avatar}/>
-                <View  style={{flex:1}}>
-                    <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center"}}>
+                <View style={{ flex: 1 }}>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                         <View>
                             <Text style={styles.name}>{post.name}</Text>
                             <Text style={styles.timestamp}>{moment(post.timestamp).fromNow()}</Text>
                         </View>
-                        <Ionicons name="ios-more" size ={24} color="#73788B" />
-
+                        <Ionicons name="ios-more" size={24} color="#73788B" style={{marginRight: 12}}/>
                     </View>
                     <Text style={styles.post}>{post.text} </Text>
                     <Image source={post.image} style={styles.postImage} resizeMode="cover"/>
-                    <View style ={{flexDirection:"row"}}>
-                        <Ionicons name ="ios-heart-empty" size={24} color="#73788B" style={{marginRight:16}}/>
-                        <Ionicons name ="ios-chatboxes" size={24} color="#73788B" />
+                    <View style={{ flexDirection: "row" }}>
+                        <Ionicons name="ios-heart-empty" size={24} color="#73788B" style={{ marginRight: 16 }}/>
+                        <Ionicons name="ios-chatboxes" size={24} color="#73788B"/>
                     </View>
-
-                   
-
                 </View>
             </View>
         );
     };
-   
 
 
-
-
-
-    render(){
-       
-        return(
-            <View style ={styles.container}>
+    render() {
+        return (
+            <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.headerTitle}>Feed</Text>
-
+                    <Text style={styles.headerTitle}>FEEDS</Text>
                 </View>
 
-                <FlatList style={styles.feed} data={posts}
-                 renderItem={({item}) => this.renderPost(item)}
-                 keyExtractor={item=> item.id}
-                 showsVerticalScrollIndicator={false}
-
-
-                
-                
+                <FlatList
+                    style={styles.feed} data={posts}
+                    renderItem={({ item }) => this.renderPost(item)}
+                    keyExtractor={item => item.id}
+                    showsVerticalScrollIndicator={false}
                 />
 
             </View>
@@ -93,73 +49,69 @@ export default class HomeScreen extends React.Component{
     }
 
 
-
-
 }
-const styles= StyleSheet.create({
-    container:{
+const styles = StyleSheet.create({
+    container: {
         flex: 1,
-        backgroundColor:"#EFECF4"
-        
-
+        backgroundColor: "#EFECF4"
     },
-    header:{
-        paddingTop: 64,
-        paddingBottom:16,
-        backgroundColor:"#FFF",
-        alignItems:"center",
-        justifyContent:"center",
-        borderBottomWidth:1,
-        borderBottomColor:"#EBECF4",
-        shadowColor:"#454D65",
-        shadowOffset:{height:5},
-        shadowRadius:15,
-        shadowOpacity:0.2,
-        zIndex:10
+    header: {
+        paddingTop: 16,
+        paddingBottom: 16,
+        backgroundColor: "#FFF",
+        alignItems: "center",
+        justifyContent: "center",
+        borderBottomWidth: 1,
+        borderBottomColor: "#EBECF4",
+        shadowColor: "#454D65",
+        shadowOffset: { height: 5 },
+        shadowRadius: 15,
+        shadowOpacity: 0.2,
+        zIndex: 10
     },
-    headerTitle:{
-        fontSize:20,
-        fontWeight:"500"
+    headerTitle: {
+        fontSize: 20,
+        fontWeight: "bold"
     },
-    feed:{
+    feed: {
         marginHorizontal: 16
     },
-    feedItem:{
-        backgroundColor:"#FFF",
-        borderRadius:5,
-        padding:8,
-        flexDirection:"row",
-        marginVertical:8
+    feedItem: {
+        backgroundColor: "#FFF",
+        borderRadius: 5,
+        padding: 8,
+        flexDirection: "row",
+        marginVertical: 8
     },
-    avatar:{
+    avatar: {
         width: 36,
-        height:36,
-        borderRadius:18,
-        marginRight:16
+        height: 36,
+        borderRadius: 18,
+        marginRight: 16
     },
-    name:{
-        fontSize:15,
-        fontWeight:"500",
-        color:"#454D65",
+    name: {
+        fontSize: 15,
+        fontWeight: "500",
+        color: "#454D65",
 
     },
-    timestamp:{
-        fontSize:11,
-        color:"#C4C6CE",
-        marginTop:4
+    timestamp: {
+        fontSize: 11,
+        color: "#C4C6CE",
+        marginTop: 4
     },
-    post:{
-        marginTop:16,
-        fontSize:14,
-        color:"#838899"
+    post: {
+        marginTop: 16,
+        fontSize: 14,
+        color: "#838899"
     }
-,
-postImage:{
-    
-    height:150,
-    borderRadius: 5,
-    marginVertical: 16,
-   width: undefined
-}
+    ,
+    postImage: {
+        height: 150,
+        borderRadius: 5,
+        marginVertical: 16,
+        width: "100%",
+        resizeMode: 'cover'
+    }
 
 });

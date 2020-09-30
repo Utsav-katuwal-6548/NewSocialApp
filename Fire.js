@@ -13,6 +13,7 @@ var firebaseConfig = {
     appId: "1:492264735593:web:9f14334bae9950cafe73f8"
   };
 
+ 
   class Fire {
       constructor(){
           this.init()
@@ -24,6 +25,7 @@ var firebaseConfig = {
                 firebase.initializeApp(firebaseConfig);
               }
         }
+       
 
 
         send = messages=> {
@@ -110,6 +112,7 @@ var firebaseConfig = {
           }
       };
 
+
       parse = message=>{
           const {user,text,timestamp} = message.val()
           const{key: _id}= message
@@ -142,9 +145,13 @@ var firebaseConfig = {
       get uid(){
           return(firebase.auth().currentUser|| {}).uid;
       }
+      get uname(){
+          return firebase.database().ref("users");
+      }
+      
      
       get db(){
-          return firebase.firestore().ref("messages");
+          return firebase.database().ref("messages");
       }
       get timestamp(){
           return Date.now();
